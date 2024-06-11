@@ -25,12 +25,13 @@
 
 <h1>Lista de Películas</h1>
 
-<form action="PeliculaServlet" method="get">
+<form method="GET" action="listaPeliculas?action=filtrar">
     <label for="genero">Filtrar por género:</label>
     <select name="genero" id="genero" onchange="this.form.submit()">
         <option value="">-- Seleccione un género --</option>
+        <option value="0">all</option>
         <% for(genero g: listaGeneros){ %>
-        <option value="<%=g.getNombre()%>"> <%=g.getNombre()%> </option>
+        <option value="<%=g.getIdGenero()%>"> <%=g.getNombre()%> </option>
         <% } %>
     </select>
 </form>
@@ -74,7 +75,7 @@
         <td><%=movie.getStreaming()%></td>
         <td><%=movie.isPremioOscar()%></td>
         <td><a href="listaActores?idPelicula=<%= movie.getIdPelicula() %>">Ver Actores</a></td>
-        <td><a href="borrarPelicula?idPelicula=<%= movie.getIdPelicula() %>"><%=salida%></a></td>
+        <td><a href="listaPeliculas?action=borrar&idPelicula=<%= movie.getIdPelicula() %>"><%=salida%></a></td>
 
 
     </tr>
