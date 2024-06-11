@@ -1,12 +1,35 @@
 package com.example.pruebalaboratorio1.daos;
+import com.example.pruebalaboratorio1.beans.genero;
 import com.example.pruebalaboratorio1.beans.streaming;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 
 public class streamingDao extends baseDao{
+    public ArrayList<streaming> listarStreaming()  {
+
+        ArrayList<streaming> listaS = new ArrayList<>();
+        String sql = "select *from streaming";
+
+
+        try (Connection conn = this.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql);){
+
+            while (rs.next()) {
+                streaming s1 = new streaming();
+                s1.setIdSreaming(rs.getInt(1));
+                s1.setNombre(rs.getString(2));
+                listaS.add(s1);
+
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return listaS;
+    }
     public streaming obtenerStreaming(int id) {
         streaming s = new streaming();
         String sql = "select * from streaming where idStreaming = ?";
