@@ -1,3 +1,18 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.example.pruebalaboratorio1.beans.pelicula"%>
+<%@page import="com.example.pruebalaboratorio1.beans.genero"%>
+<%@page import="com.example.pruebalaboratorio1.beans.streaming"%>
+<%@page import="java.text.NumberFormat"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    //Job job = (Job) request.getAttribute("job");
+    ArrayList<streaming> listaStr = (ArrayList) request.getAttribute("listaStr");
+    ArrayList<genero> listaGeneros = (ArrayList) request.getAttribute("listaGeneros");
+    //ArrayList<streaming> listaStreaming = (ArrayList) request.getAttribute("listarStraming");
+    String searchTerm = request.getParameter("searchTerm");
+    NumberFormat formatter = NumberFormat.getInstance();
+%>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -7,7 +22,7 @@
 </head>
 <body>
 <h2>Formulario de Creacion de Pelicula</h2>
-<form action="/enviar_datos" method="post">
+<form action="listaPeliculas?action=enviar" method="post">
 
 
     <label for="titulo">Titulo:</label><br>
@@ -28,18 +43,30 @@
     <label for="duracion">Duracion:</label><br>
     <input type="text" id="duracion" name="duracion" required><br>
 
-    <label for="genero">Genero:</label><br>
-    <input type="text" id="genero" name="genero" required><br>
+    <label for="genero">Genero</label><br>
+    <select name="genero" class="form-select" id="genero">
+        <% for(genero g: listaGeneros){ %>
+        <option value="<%=g.getIdGenero()%>"> <%=g.getNombre()%> </option>
+        <% } %>
+    </select><br>
 
-    <label for="streaming">Streaming:</label><br>
-    <input type="text" id="streaming" name="streaming" required><br>
+    <label for="streaming">Streaming</label><br>
+    <select name="streaming" class="form-select" id="streaming">
+        <% for(streaming s: listaStr){ %>
+        <option value="<%=s.getIdSreaming()%>"> <%=s.getNombre()%> </option>
+        <% } %>
+    </select><br>
+
 
     <label for="premioOscar">PremioOscar:</label><br>
-    <input type="text" id="premioOscar" name="premioOscar" required><br>
+    <select id="premioOscar" name="premioOscar">
+        <option value="true">Sí</option>
+        <option value="false">No</option>
+    </select><br>
 
 
 
-    <input type="submit" value="Enviar">
+    <input type="submit" value="enviar">
 </form>
 </body>
 </html>
